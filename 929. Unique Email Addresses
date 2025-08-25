@@ -1,0 +1,30 @@
+#include <vector>
+#include <string>
+#include <unordered_set>
+using namespace std;
+
+class Solution {
+public:
+    int numUniqueEmails(vector<string>& emails) {
+        unordered_set<string> unique;
+
+        for (string &e : emails) {
+            string clean = "";
+            bool ignore = false;
+
+            for (char c : e) {
+                if (c == '@') { 
+                    clean += e.substr(e.find('@')); // fixed line
+                    break; 
+                }
+                if (ignore) continue;
+                if (c == '+') { ignore = true; continue; }
+                if (c != '.') clean += c;
+            }
+
+            unique.insert(clean);
+        }
+
+        return unique.size();
+    }
+};
